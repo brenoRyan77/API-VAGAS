@@ -22,7 +22,7 @@ public class SwaggerConfig implements WebMvcConfigurer {
     @Bean
     public Docket api() {
         return new Docket(DocumentationType.SWAGGER_2).select()
-                .apis(RequestHandlerSelectors.basePackage("com.br.brenoryan.api.vagas"))
+                .apis(RequestHandlerSelectors.basePackage("com.br.brenoryan.api.vagas.controller"))
                 .paths(PathSelectors.regex("/.*"))
                 .build().apiInfo(apiInfoMetaData())
                 .securitySchemes(List.of(new ApiKey("JWT", HttpHeaders.AUTHORIZATION, "Bearer ")))
