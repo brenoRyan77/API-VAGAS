@@ -45,7 +45,7 @@ public class TokenGenerator {
                 .fromCurrentContextPath().build().toUriString()
                 + "/api-vagas";
         return JWT.create()
-                .withClaim("perfis", roles)
+                .withClaim("roles", roles)
                 .withIssuedAt(now)
                 .withExpiresAt(validity)
                 .withSubject(username)
