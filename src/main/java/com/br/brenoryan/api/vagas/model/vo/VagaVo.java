@@ -3,6 +3,7 @@ package com.br.brenoryan.api.vagas.model.vo;
 import com.br.brenoryan.api.vagas.model.entities.Vaga;
 import com.br.brenoryan.api.vagas.model.enums.ModalidadeVaga;
 import com.br.brenoryan.api.vagas.model.enums.TipoVaga;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 
@@ -18,7 +19,9 @@ public class VagaVo {
     private String descricao;
     private ModalidadeVaga modalidadeVaga;
     private TipoVaga tipoVaga;
+    @JsonFormat(pattern = "dd/MM/yyyy")
     private LocalDate dataPublicacao;
+    @JsonFormat(pattern = "dd/MM/yyyy")
     private LocalDate dataEncerramento;
 
     public VagaVo(Vaga vaga){

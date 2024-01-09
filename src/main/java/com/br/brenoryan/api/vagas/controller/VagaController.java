@@ -30,26 +30,24 @@ public class VagaController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Object> buscarVagaPorId(@PathParam("id") Long id) throws Exception {
+    public ResponseEntity<Object> buscarVagaPorId(@PathVariable("id") Long id) throws Exception {
         return new ResponseEntity<>(service.buscarVagaPorId(id), HttpStatus.OK);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<?> atualizarVaga(@PathParam("id") Long id ,@RequestBody @Valid VagaRequest request) throws Exception {
+    public ResponseEntity<?> atualizarVaga(@PathVariable("id") Long id ,@RequestBody @Valid VagaRequest request) throws Exception {
         service.atualizarVaga(id, request);
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
 
     @GetMapping
-    public ResponseEntity<List<VagaVo>> listarVagas(
-            @RequestParam(defaultValue = "0") int page,
-            @RequestParam(defaultValue = "10") int size){
-        List<VagaVo> vagas = service.listarVagas(page, size);
+    public ResponseEntity<List<VagaVo>> listarVagas(){
+        List<VagaVo> vagas = service.listarVagas();
         return ResponseEntity.ok(vagas);
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<?> encerrarVaga(@PathParam("id") Long id) throws Exception {
+    public ResponseEntity<?> encerrarVaga(@PathVariable("id") Long id) throws Exception {
         service.encerrarVaga(id);
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }

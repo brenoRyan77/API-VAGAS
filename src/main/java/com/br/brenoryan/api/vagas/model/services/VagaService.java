@@ -12,6 +12,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -40,10 +41,12 @@ public class VagaService {
         return new VagaVo(vaga.get());
     }
 
-    public List<VagaVo> listarVagas(int page, int size){
-        Pageable pageable = PageRequest.of(page, size);
-        Page<Vaga> vagas = repository.findByDataEncerramentoIsNull(pageable);
-        return vagas.map(VagaVo::new).toList();
+    public List<VagaVo> listarVagas(){
+        List<Vaga> vagas = repository.findByDataEncerramentoIsNull();
+        if(vagas.isEmpty()){
+            return new ArrayList<>();
+        }
+        return vagas.stream().map(VagaVo::new).toList();
     }
 
     @Transactional
