@@ -3,6 +3,7 @@ package com.br.brenoryan.api.vagas.controller;
 import com.br.brenoryan.api.vagas.model.request.VagaRequest;
 import com.br.brenoryan.api.vagas.model.services.VagaService;
 import com.br.brenoryan.api.vagas.model.vo.VagaVo;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import jakarta.websocket.server.PathParam;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +17,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/vagas")
 @CrossOrigin("*")
+@Tag(name = "Vaga Controller", description = "Operações referentes à Vagas.")
 public class VagaController {
 
     @Autowired

@@ -6,6 +6,7 @@ import com.br.brenoryan.api.vagas.model.request.UsuarioLogin;
 import com.br.brenoryan.api.vagas.model.request.UsuarioRequest;
 import com.br.brenoryan.api.vagas.model.response.TokenResponse;
 import com.br.brenoryan.api.vagas.model.services.UsuarioService;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -17,6 +18,7 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("/auth")
 @CrossOrigin("*")
+@Tag(name = "Usuario Controller", description = "Operações referentes a Usuários.")
 public class UsuarioController {
 
     @Autowired
