@@ -13,4 +13,6 @@ public class VagaRequest {
     private String descricao;
     private ModalidadeVaga modalidadeVaga;
     private TipoVaga tipoVaga;
+    private String nivel;
+    private String escolaridade;
 }

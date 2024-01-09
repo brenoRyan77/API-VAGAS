@@ -31,6 +31,10 @@ public class Vaga {
     @Column(nullable = false, name = "tipo_vaga")
     @Enumerated(EnumType.STRING)
     private TipoVaga tipoVaga;
+    @Column(length = 25)
+    private String nivel;
+    @Column(length = 50)
+    private String escolaridade;
     @CreationTimestamp
     @Column(name = "dt_publicacao")
     private LocalDate dataPublicacao;

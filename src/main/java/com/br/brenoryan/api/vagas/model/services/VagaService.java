@@ -29,6 +29,8 @@ public class VagaService {
         novaVaga.setDescricao(request.getDescricao());
         novaVaga.setModalidadeVaga(request.getModalidadeVaga());
         novaVaga.setTipoVaga(request.getTipoVaga());
+        novaVaga.setNivel(request.getNivel());
+        novaVaga.setEscolaridade(request.getEscolaridade());
         repository.save(novaVaga);
     }
 
@@ -73,6 +75,8 @@ public class VagaService {
         vaga.setDescricao(request.getDescricao());
         vaga.setModalidadeVaga(request.getModalidadeVaga());
         vaga.setTipoVaga(request.getTipoVaga());
+        vaga.setNivel(request.getNivel());
+        vaga.setEscolaridade(request.getEscolaridade());
         return vaga;
     }
 }

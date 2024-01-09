@@ -19,6 +19,8 @@ public class VagaVo {
     private String descricao;
     private ModalidadeVaga modalidadeVaga;
     private TipoVaga tipoVaga;
+    private String nivel;
+    private String escolaridade;
     @JsonFormat(pattern = "dd/MM/yyyy")
     private LocalDate dataPublicacao;
     @JsonFormat(pattern = "dd/MM/yyyy")
@@ -31,6 +33,8 @@ public class VagaVo {
         this.descricao = vaga.getDescricao();
         this.modalidadeVaga = vaga.getModalidadeVaga();
         this.tipoVaga = vaga.getTipoVaga();
+        this.nivel = vaga.getNivel();
+        this.escolaridade = vaga.getEscolaridade();
         this.dataPublicacao = vaga.getDataPublicacao();
         this.dataEncerramento = vaga.getDataEncerramento();
     }
