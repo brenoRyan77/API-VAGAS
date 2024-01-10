@@ -43,3 +43,14 @@ Recrutadores, administradores de RH, candidatos.
 - Em caso de credenciais inválidas, os atores não conseguem autenticar-se no sistema.
 - Se uma vaga estiver encerrada, não será possível se candidatar a ela.
 - Se uma candidatura for cancelada, a mesma não será mais considerada válida no sistema.
+
+
+
+
+# Configuração geral do Projeto
+
+- Java versão 17
+- Banco de dados relacional PostgreSQL
+
+ ## Swagger
+- http://localhost:8080/swagger-ui
