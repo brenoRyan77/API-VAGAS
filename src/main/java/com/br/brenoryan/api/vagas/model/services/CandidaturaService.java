@@ -33,10 +33,20 @@ public class CandidaturaService {
             throw new Exception("usuário ou vaga não encontrados.");
         }
 
-        Optional<Candidatura> candidaturaExistente = repository.verificarCandidatura(user.getId(), vaga.getId());
+        List<Candidatura> candidaturaExistente = repository.verificarCandidatura(user.getId(), vaga.getId());
 
-        if(candidaturaExistente.isPresent() && candidaturaExistente.get().getStatus().equalsIgnoreCase("Em análise")){
-            throw new IllegalStateException("Você já está concorrendo a essa vaga.");
+        if (!candidaturaExistente.isEmpty()) {
+            long desistenciaCount = candidaturaExistente.stream()
+                    .filter(candidatura -> candidatura.getStatus().equalsIgnoreCase("Desistência"))
+                    .count();
+
+            if (desistenciaCount > 0) {
+                candidaturaExistente.removeIf(candidatura ->
+                        candidatura.getStatus().equalsIgnoreCase("Desistência"));
+                candidaturaExistente.forEach(repository::delete);
+            } else {
+                throw new Exception("Você já está concorrendo a essa vaga.");
+            }
         }
 
         Candidatura candidatura = new Candidatura();

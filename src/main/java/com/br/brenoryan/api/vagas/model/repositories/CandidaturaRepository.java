@@ -15,7 +15,7 @@ public interface CandidaturaRepository extends JpaRepository<Candidatura, Long> 
     List<Candidatura> findByCandidato(Usuario candidato);
 
     @Query("SELECT c FROM Candidatura c WHERE c.candidato.id = :idUser AND c.vaga.id = :idVaga")
-    Optional<Candidatura> verificarCandidatura(@Param("idUser") Long idUser, @Param("idVaga") Long idVaga);
+    List<Candidatura> verificarCandidatura(@Param("idUser") Long idUser, @Param("idVaga") Long idVaga);
 
     Optional<Candidatura> findByIdAndCandidatoId(Long candidaturaId, Long candidatoId);
 }
