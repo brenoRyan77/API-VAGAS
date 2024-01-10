@@ -31,4 +31,10 @@ public class CandidaturaController {
     public ResponseEntity<List<CandidaturaResponse>> listarMinhasCandidaturas(@PathVariable("login") String login){
         return new ResponseEntity<>(service.minhasCandidaturas(login), HttpStatus.OK);
     }
+
+    @DeleteMapping("/desistir/{login}/{idCandidatura}")
+    public ResponseEntity<?> desistir(@PathVariable("login") String login, @PathVariable("idCandidatura") Long idCandidatura) throws Exception {
+        service.desistirCandidatura(login, idCandidatura);
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+    }
 }

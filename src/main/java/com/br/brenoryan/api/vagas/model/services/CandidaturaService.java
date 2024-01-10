@@ -7,14 +7,12 @@ import com.br.brenoryan.api.vagas.model.repositories.CandidaturaRepository;
 import com.br.brenoryan.api.vagas.model.request.CandidaturaRequest;
 import com.br.brenoryan.api.vagas.model.response.CandidaturaResponse;
 import com.br.brenoryan.api.vagas.model.vo.VagaVo;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 @Service
 public class CandidaturaService {
@@ -37,7 +35,7 @@ public class CandidaturaService {
 
         Optional<Candidatura> candidaturaExistente = repository.verificarCandidatura(user.getId(), vaga.getId());
 
-        if(candidaturaExistente.isPresent()){
+        if(candidaturaExistente.isPresent() && candidaturaExistente.get().getStatus().equalsIgnoreCase("Em análise")){
             throw new IllegalStateException("Você já está concorrendo a essa vaga.");
         }
 
@@ -56,25 +54,50 @@ public class CandidaturaService {
     }
 
     public List<CandidaturaResponse> minhasCandidaturas(String username) {
-
         List<Candidatura> candidaturas = listarCandidaturaPorCandidato(username);
 
         if(candidaturas.isEmpty()){
             return new ArrayList<>();
         }
 
-        List<CandidaturaResponse> listaCandidaturas = new ArrayList<>();
-
+        Map<Long, Candidatura> mapaCandidaturas = new HashMap<>();
         for (Candidatura candidatura : candidaturas) {
+            if (!mapaCandidaturas.containsKey(candidatura.getVaga().getId())
+                    || candidatura.getStatus().equals("Em análise")) {
+                mapaCandidaturas.put(candidatura.getVaga().getId(), candidatura);
+            }
+        }
+
+        List<CandidaturaResponse> listaCandidaturas = new ArrayList<>();
+        for (Candidatura candidatura : mapaCandidaturas.values()) {
             CandidaturaResponse candidaturaResponse = new CandidaturaResponse();
             candidaturaResponse.setIdCandidatura(candidatura.getId());
-            candidaturaResponse.setStatus(candidatura.getStatus());
             candidaturaResponse.setDataAplicacao(candidatura.getDataCandidatura());
-            candidaturaResponse.setVaga(new VagaVo(candidatura.getVaga()));
 
+            if (candidatura.getVaga().getDataEncerramento() != null) {
+                candidaturaResponse.setStatus("Vaga encerrada");
+            } else {
+                candidaturaResponse.setStatus(candidatura.getStatus());
+            }
+
+            candidaturaResponse.setVaga(new VagaVo(candidatura.getVaga()));
             listaCandidaturas.add(candidaturaResponse);
         }
 
         return listaCandidaturas;
+    }
+
+    @Transactional
+    public void desistirCandidatura(String login, Long idCandidatura) throws Exception {
+        Usuario user = usuarioService.buscarUsuarioLogado(login);
+        Optional<Candidatura> candidatura = repository.findByIdAndCandidatoId(idCandidatura, user.getId());
+
+        if(candidatura.isEmpty()){
+            throw new Exception("Candidatura não encontrada.");
+        }
+
+        Candidatura desistirCand = candidatura.get();
+        desistirCand.setStatus("Desistência");
+        repository.save(desistirCand);
     }
 }
