@@ -49,4 +49,9 @@ public class UsuarioService implements UserDetailsService {
 
         repository.save(usuario);
     }
+
+    public Usuario buscarUsuarioLogado(String username){
+        return repository.findByUsername(username)
+                .orElseThrow(()-> new UsernameNotFoundException("Não foi encontrado o usúario:" + username));
+    }
 }

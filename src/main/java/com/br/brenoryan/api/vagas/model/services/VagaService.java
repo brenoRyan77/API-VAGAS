@@ -1,5 +1,6 @@
 package com.br.brenoryan.api.vagas.model.services;
 
+import com.br.brenoryan.api.vagas.model.entities.Candidatura;
 import com.br.brenoryan.api.vagas.model.entities.Vaga;
 import com.br.brenoryan.api.vagas.model.repositories.VagaRepository;
 import com.br.brenoryan.api.vagas.model.request.VagaRequest;
@@ -79,4 +80,10 @@ public class VagaService {
         vaga.setEscolaridade(request.getEscolaridade());
         return vaga;
     }
+
+    public Vaga buscarVagaPorIdEntidade(Long idVaga) throws Exception {
+        return repository.buscarVagaAtivaPorid(idVaga)
+                .orElseThrow(() -> new Exception("Vaga não encontrada: " + idVaga));
+    }
+
 }
